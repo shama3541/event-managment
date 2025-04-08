@@ -1,0 +1,22 @@
+{
+  "name": "event-managment",
+  "version": "1.0.0",
+  "description": "airtribe project",
+  "main": "app.js",
+  "scripts": {
+    "test": "tap tests/*.js --disable-coverage"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "moongoose": "^0.0.5",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.1.0",
+    "tap": "^21.1.0"
+  }
+}
