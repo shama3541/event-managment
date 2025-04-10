@@ -1,36 +1,49 @@
 # 📅 Event Management App
 
-A simple event management application built with Node.js, Express, MongoDB, and JWT authentication. Users can register, log in, create events (if they are organizers), register for events, and receive email notifications via Gmail using Nodemailer.
-
----
-
-## 🔧 Tech Stack
-
-- **Node.js**
-- **Express.js**
-- **MongoDB + Mongoose**
-- **JWT** for authentication
-- **bcrypt** for password hashing
-- **Nodemailer** for email notifications
+A simple and dynamic event management system built with **Node.js**, **Express**, **MongoDB**, and **JWT authentication**. It supports user registration, login, role-based access, event creation and registration, and email notifications.
 
 ---
 
 ## 🚀 Features
 
-- User registration and login
-- Role-based access: Organizer and Attendee
-- Organizers can:
-  - Create, update, delete, and view events
-- Attendees can:
-  - Register for events
-  - View events they are registered to
-- Email confirmation upon event registration
+- ✅ User registration and login
+- 🔐 JWT-based authentication
+- 🧑‍💼 Organizer role: create, update, delete, view events
+- 🙋 Attendee role: register for events, view their registrations
+- 📬 Email confirmation via Gmail using Nodemailer
+- 🔬 Integration tests using Tap and Supertest
 
 ---
 
-## 📁 Project Structure
+## 🛠️ Tech Stack
 
-. ├── Controller/ │ ├── Event.js │ └── User.js ├── Middleware/ │ └── Middleware.js ├── Models/ │ ├── EventSchema.js │ └── UserSchema.js ├── utils/ │ └── mailer.js ├── routes/ │ └── router.js ├── .env ├── server.js └── README.md
+- **Node.js** with Express.js
+- **MongoDB** using Mongoose ODM
+- **JWT** for authentication
+- **Bcrypt** for password hashing
+- **Nodemailer** for sending registration emails
+- **Tap** + **Supertest** for testing
+
+---
+
+## 🧾 API Endpoints
+
+| Method | Endpoint                  | Role       | Description                       |
+|--------|---------------------------|------------|-----------------------------------|
+| POST   | `/register`               | Public     | Register a user                   |
+| POST   | `/login`                  | Public     | Login and receive JWT             |
+| POST   | `/createEvent`           | Organizer  | Create an event                   |
+| PUT    | `/updateEvent`           | Organizer  | Update an event                   |
+| DELETE | `/deleteEvent`           | Organizer  | Delete an event                   |
+| GET    | `/getEvent`              | Organizer  | View all events                   |
+| POST   | `/registerForEvent/:id`  | Attendee   | Register for an event             |
+| GET    | `/eventsRegistered`      | Attendee   | View registered events            |
+
+---
+
+## 📁 Folder Structure
+
+. ├── app.js ├── Routes/ │ └── Routes.js ├── Controller/ │ ├── User.js │ └── Event.js ├── Middleware/ │ └── Middleware.js ├── Models/ │ ├── UserSchema.js │ └── EventSchema.js ├── utils/ │ └── Email.js ├── tests/ │ └── server.test.js
 
 yaml
 Copy
@@ -38,83 +51,56 @@ Edit
 
 ---
 
-## 📦 Setup
+## ⚙️ Environment Setup
 
-### 1. Clone the repository
+Create a `.env` file in the root directory:
 
-```bash
-git clone https://github.com/your-username/event-management-app.git
-cd event-management-app
-2. Install dependencies
+```env
+PORT=3000
+MONGO_URL=mongodb://localhost:27017/eventapp
+JWT_SECRET=your_jwt_secret
+
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
+🔐 Use a Gmail App Password if you have 2FA enabled. You can generate one here.
+
+🚀 Running the App
 bash
 Copy
 Edit
 npm install
-3. Create .env file
-bash
-Copy
-Edit
-touch .env
-Add the following content:
-
-env
-Copy
-Edit
-PORT=3000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASSWORD=your_gmail_app_password
-💡 Tip: To generate an app password for Gmail, follow this guide.
-
-4. Start the server
-bash
-Copy
-Edit
 npm start
-🔌 API Endpoints
-Auth
-POST /register - Register a user
-
-POST /login - Log in and receive JWT
-
-Events (Organizer only)
-POST /createEvent - Create an event
-
-PUT /updateEvent - Update an event
-
-DELETE /deleteEvent - Delete an event
-
-GET /getEvent - Get all events
-
-Event Registration (Attendee only)
-POST /registerForEvent/:id - Register for an event
-
-GET /eventsRegistered - Get registered events
-
-✅ Example .env
-env
+🧪 Running Tests
+bash
 Copy
 Edit
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/eventdb
-JWT_SECRET=mytopsecret
+npm test
+Uses Tap and Supertest to run integration tests under tests/server.test.js. The tests dynamically:
 
-EMAIL_USER=yourname@gmail.com
-EMAIL_PASSWORD=yourapppassword
-📬 Email Configuration
-Uses Nodemailer with Gmail SMTP. Make sure:
+Register users
 
-2FA is enabled for your Gmail
+Login users
 
-App password is used in .env
+Create events
 
-📄 License
-This project is licensed under the MIT License.
+Register for events
 
-🙌 Contributing
-Feel free to fork, raise issues, and submit PRs. Suggestions are welcome!
+Verify user-specific event data
+
+📬 Email Setup
+Email confirmation is sent when an attendee registers for an event using Nodemailer with Gmail SMTP.
+
+Make sure:
+
+EMAIL_USER is a Gmail address
+
+EMAIL_PASSWORD is an App Password
+
+🙌 Contributions
+Feel free to fork, open issues, or submit pull requests.
+
+✨ Author
+Made with 💻 by Shamadeep
 
 yaml
 Copy
@@ -122,8 +108,8 @@ Edit
 
 ---
 
-Let me know if you also want:
-- A sample Postman collection
+Let me know if you want:
 - Swagger API docs
-- Docker setup instructions
-- Hosting setup (Render, Vercel, etc.)
+- Docker support
+- Instructions for MongoDB Atlas
+- CI workflow for testing automatically on push (e.g., GitHub Actions)
