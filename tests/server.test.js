@@ -129,31 +129,31 @@ tap.test('PUT /UpdateEvent',async(t)=>{
     t.end();
 })
 
-// tap.test('POST /deleteEvent',async(t)=>{
-//     const response = await server.delete('/deleteEvent').set('Authorization', `Bearer ${token}`).send({
-//         "id":590584})
-//     t.equal(response.statusCode, 200);
-// })
+tap.test('POST /deleteEvent',async(t)=>{
+    const response = await server.delete('/deleteEvent').set('Authorization', `Bearer ${token}`).send({
+        "id":590584})
+    t.equal(response.statusCode, 200);
+})
 
-tap.test('POST /registerForEvent/423',async(t)=>{
+tap.test('POST /registerForEvent/',async(t)=>{
     const response = await server.post('/registerForEvent/284488').set('Authorization', `Bearer ${token}`).send({"email":mockUser2.username})
     t.equal(response.statusCode, 200);
 })
-tap.test('POST /registerForEvent/284488',async(t)=>{
+tap.test('POST /registerForEvent/',async(t)=>{
     const response = await server.post('/registerForEvent/467367').set('Authorization', `Bearer ${token}`).send({
         "email":mockUser2.username})
     t.equal(response.statusCode, 200);
 })
 
 
-// tap.test("GET /eventsRegistered", async (t) => {
-//   const response = await server
-//     .get("/eventsRegistered")
-//     .set("Authorization", `Bearer ${token}`);
-//   t.equal(response.statusCode, 200);
-//   t.same(response.body, event);
-//   t.end();
-// });
+tap.test("GET /eventsRegistered", async (t) => {
+  const response = await server
+    .get("/eventsRegistered")
+    .set("Authorization", `Bearer ${token}`);
+  t.equal(response.statusCode, 200);
+  t.same(response.body, event);
+  t.end();
+});
 
 
 tap.teardown(() => {
