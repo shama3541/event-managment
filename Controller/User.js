@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const User = require("../Models/UserSchema");
+const Event = require("../Models/EventSchema");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -23,7 +24,10 @@ async function RegisterUser(req, res) {
   await newuser.save();
   res.send("User Registered");
 }catch(err){
-  console.log(err);
+  if (err.code === 11000) {
+    const duplicatedField = Object.keys(err.keyPattern)[0]; 
+    return res.status(409).send(`User with that ${duplicatedField} already exists`);
+  }
   res.status(500).send("Error registering user");
 }
 }
@@ -49,6 +53,22 @@ async function LoginUser(req,res){
         res.status(500).send("Error logging in");
     }
 
+
 }
 
-module.exports = { RegisterUser,LoginUser };
+
+async function EventsRegistered (req,res){
+    const username= req.user.username
+    try{
+        const event= await Event.find({participants: username});
+        if(!event){
+            return res.status(400).send("You haven't regostered for any event");
+        }
+        res.status(200).json(event);
+    }catch(err){
+        console.log(err);
+        res.status(500).send("Error fetching events");
+    }
+}
+
+module.exports = { RegisterUser,LoginUser,EventsRegistered };

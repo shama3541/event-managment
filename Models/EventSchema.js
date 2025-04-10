@@ -4,7 +4,7 @@ const EventSchema = new mongoose.Schema({
   id: {
     type: Number,
     required: true,
-  unique: true,
+    unique: true,
   },
   date: {
     type: Date,
@@ -20,8 +20,6 @@ const EventSchema = new mongoose.Schema({
   },
   participants:{
     type: [String],
-    unique:true,
-    required: true,
     default: [],
   }
 });
